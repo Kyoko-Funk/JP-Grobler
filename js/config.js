@@ -154,7 +154,7 @@ window.SITE = {
       { value: "none",        short: "eats anything", label: "Nothing — I'll eat anything that stood still long enough" },
       { value: "vegetarian",  short: "vegetarian",    label: "Vegetarian — yes, even at a farm wedding. We respect the bravery." },
       { value: "halaal",      short: "halaal",        label: "Halaal — the kitchen will look after you" },
-      { value: "no-nuts",     short: "no nuts",       label: "Nut allergy — no nuts on my plate, please (the ones at the table are quite enough 😉)" }
+      { value: "no-nuts",     short: "no nuts",       label: "No nuts, please — the ones at our table are quite enough 😉" }
     ],
     thanksYes: "Baie dankie! Your seat is warm and waiting. Practise your langarm.",
     thanksNo: "We're sad, but we understand. We'll raise a glass for you — and maybe talk about you a little."
