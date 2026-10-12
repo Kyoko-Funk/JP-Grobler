@@ -63,8 +63,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
   line-height: 1; margin: 1.2rem 0 .6rem; letter-spacing: .02em;
 }
 .names .amp { font-family: var(--script); color: var(--gold); font-size: .8em; padding: 0 .15em; }
-.names--small { font-size: clamp(2.2rem, 1.6rem + 3vw, 3.6rem); }
-.date { font-family: var(--display); letter-spacing: .35em; font-size: 1.15rem; margin: .4rem 0 2.2rem; }
+.names--small { font-size: clamp(2.2rem, 1.6rem + 3vw, 3.6rem); display: flex; flex-wrap: wrap; justify-content: center; column-gap: .25em; }
+@media (max-width: 640px) { .names--small { flex-direction: column; align-items: center; row-gap: .05em; } .names--small .amp { line-height: .9; } }
+/* opening screen: classic invitation stack — name, surname in small caps, ampersand, name… */
+.names--stack { display: flex; flex-direction: column; align-items: center; gap: .15em; font-size: clamp(2.3rem, 1.6rem + 2.6vw, 3.5rem); margin: .9rem 0 .5rem; }
+.names--stack .amp { padding: 0; line-height: .9; }
+.who { display: flex; flex-direction: column; align-items: center; }
+.who small {
+  font-family: var(--display); font-size: .74rem; letter-spacing: .38em; text-transform: uppercase;
+  color: var(--ink-soft); margin-top: .35rem; padding-left: .38em; font-weight: 400;
+}
+.date { font-family: var(--display); letter-spacing: .35em; font-size: 1.15rem; margin: .3rem 0 1.5rem; }
 .link { color: var(--sage-deep); text-decoration: none; border-bottom: 1px solid var(--sage-soft); }
 .link:hover { border-color: var(--sage-deep); }
 
@@ -104,9 +113,10 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .reveal.is-in { opacity: 1; transform: none; }
 
 /* ---------- one · arrival ---------- */
+#arrival { padding-top: 1.2rem; padding-bottom: 1.2rem; }
 .arrival { text-align: center; max-width: 34rem; display: flex; flex-direction: column; align-items: center; }
 .arch {
-  margin: .5rem 0 0; width: min(68vw, 270px); aspect-ratio: 3 / 4;
+  margin: .5rem 0 0; width: min(60vw, 240px, 21vh); width: min(60vw, 240px, 21svh); aspect-ratio: 3 / 4;
   border-radius: 999px 999px 6px 6px; overflow: hidden; position: relative;
   box-shadow: var(--shadow); background: var(--linen);
   outline: 1px solid var(--sage-soft); outline-offset: 8px;

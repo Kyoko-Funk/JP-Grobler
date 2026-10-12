@@ -39,7 +39,7 @@ backend/supabase-setup.sql      ← paste into Supabase (scrapbook storage + ree
 
 ## Step 0 · Personalise it (10 minutes)
 
-1. Open **`js/config.js`**. Change `names: ["JP", "Partner"]` to the couple's real first names.
+1. Open **`js/config.js`**. The couple's names (`names` and `surnames`) are already filled in — Jean-Pierre Grobler & Juan-Marie Van Zyl.
 2. Rewrite the **quiz** with real facts about them. For each question, `answer` is the position of the right option, **counting from 0** (first option = 0, second = 1…). You can write `{0}` and `{1}` and they'll be swapped for the couple's names.
 3. Check the venue blurb, directions, dress code, and the RSVP deadline (`rsvpBy`). The directions are based on what's published online about Out of Nature Country Lodge — please double-check them with the venue.
 4. Add a photo of the couple to the `images` folder named **`couple.jpg`**. A portrait (taller than wide) looks best in the arch frame.

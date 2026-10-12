@@ -15,6 +15,7 @@
 
   /* ---------- fill words from config.js ---------- */
   $$("[data-name]").forEach(el => (el.textContent = S.names[+el.dataset.name]));
+  $$("[data-surname]").forEach(el => (el.textContent = (S.surnames || [])[+el.dataset.surname] || ""));
   $$("[data-fill]").forEach(el => (el.textContent = fmt(get(el.dataset.fill) ?? "")));
   document.title = `${S.names[0]} & ${S.names[1]} · ${S.venueNickname}`;
 
