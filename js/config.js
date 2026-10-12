@@ -11,7 +11,7 @@ window.SITE = {
   /* --- The couple ---------------------------------------------------- */
   names: ["JP", "Partner"],           // ← EDIT: the couple's first names
   photo: "images/couple.jpg",          // ← drop their photo in /images with this name
-  venueNickname: "Dombo's",
+  venueNickname: "Out of Nature",
 
   /* --- The day ------------------------------------------------------- */
   dateISO: "2027-04-10T16:00:00+02:00", // used for the countdown (Namibian time)
@@ -23,16 +23,16 @@ window.SITE = {
 
   /* --- The venue ----------------------------------------------------- */
   venue: {
-    name: "Dombo's at Out of Nature",
+    name: "Out of Nature Country Lodge",
     blurb:
-      "Tucked into the camelthorn and the long golden grass, Dombo's is the kind of place " +
+      "Tucked into the camelthorn and the long golden grass, Out of Nature is the kind of place " +
       "that makes city folk go quiet and farm folk feel right at home. Big skies, a bigger " +
       "sunset, and enough space for the tannies to dance without anyone getting a heel in the shin.",
-    address: "Out of Nature Country Lodge, ±30 km south of Windhoek, off the B1, Khomas Region, Namibia",
+    address: "±30 km south of Windhoek, off the B1, Khomas Region, Namibia",
     directions: [
       "From Windhoek, take the B1 south towards Rehoboth.",
       "About 30 km out of town, keep an eye out for the Out of Nature signs on the B1.",
-      "Follow the signs to the lodge and on to Dombo's. If you see Rehoboth, you've gone too far — turn around, nobody saw anything.",
+      "Follow the signs to the lodge. If you see Rehoboth, you've gone too far — turn around, nobody saw anything.",
       "There's gravel at the end. Drive like your oupa is in the back seat."
     ],
     mapsQuery: "Out of Nature Country Lodge, Windhoek, Namibia", // what Google Maps searches for

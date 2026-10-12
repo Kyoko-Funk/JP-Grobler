@@ -11,7 +11,7 @@
     get(k) { try { return localStorage.getItem(k); } catch (_) { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch (_) {} }
   };
-  const PASSED_KEY = "dombos-passed";
+  const PASSED_KEY = "wedding-passed";
 
   /* ---------- fill words from config.js ---------- */
   $$("[data-name]").forEach(el => (el.textContent = S.names[+el.dataset.name]));

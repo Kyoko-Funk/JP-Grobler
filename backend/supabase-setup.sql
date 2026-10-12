@@ -1,5 +1,5 @@
 -- =====================================================================
---  Dombo's — Supabase setup for the scrapbook and the farewell reel.
+--  Wedding site — Supabase setup for the scrapbook and the farewell reel.
 --  Paste this whole file into Supabase → SQL Editor → New query → Run.
 --
 --  BEFORE RUNNING: change the reel password on the line marked ⬇ below.

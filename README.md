@@ -1,10 +1,10 @@
-# Dombo's — a wedding invitation website 🌿
+# Out of Nature — a wedding invitation website 🌿
 
 A surprise invitation site: elegant on the outside, cheeky underneath.
 
 | Screen | What happens |
 |---|---|
-| 1 · Arrival | Names, photo, date, *Dombo's*, gentle fade-in, one button |
+| 1 · Arrival | Names, photo, date, *Out of Nature*, gentle fade-in, one button |
 | 2 · The gate | "Will you come?" — the **No** button runs away until they click **Yes** → confetti |
 | 3 · Quiz | Six questions, one per card, confetti for right answers, teasing for wrong ones |
 | 4 · Details | Date, time, venue, map, directions, dress code, live countdown |
@@ -41,7 +41,7 @@ backend/supabase-setup.sql      ← paste into Supabase (scrapbook storage + ree
 
 1. Open **`js/config.js`**. Change `names: ["JP", "Partner"]` to the couple's real first names.
 2. Rewrite the **quiz** with real facts about them. For each question, `answer` is the position of the right option, **counting from 0** (first option = 0, second = 1…). You can write `{0}` and `{1}` and they'll be swapped for the couple's names.
-3. Check the venue blurb, directions, dress code, and the RSVP deadline (`rsvpBy`). I couldn't confirm anything online about "Dombo's" itself, so please double-check the directions with the venue.
+3. Check the venue blurb, directions, dress code, and the RSVP deadline (`rsvpBy`). The directions are based on what's published online about Out of Nature Country Lodge — please double-check them with the venue.
 4. Add a photo of the couple to the `images` folder named **`couple.jpg`**. A portrait (taller than wide) looks best in the arch frame.
 
 ---
@@ -50,7 +50,7 @@ backend/supabase-setup.sql      ← paste into Supabase (scrapbook storage + ree
 
 **What this is:** a Google Sheet with a small script attached. The script gets its own private web address. The website sends each RSVP to that address, the script adds a row to the sheet and emails you. It's free and uses your normal Google account.
 
-1. Go to [sheets.google.com](https://sheets.google.com) and create a **blank spreadsheet**. Name it something like *Dombo's Guest List*.
+1. Go to [sheets.google.com](https://sheets.google.com) and create a **blank spreadsheet**. Name it something like *Wedding Guest List*.
 2. In the menu, click **Extensions → Apps Script**. A code editor opens in a new tab.
 3. Delete everything in the editor. Open `backend/google-apps-script.gs` from this folder, copy **all** of it, and paste it in.
    - The emails go to the Google account you're signed in with. To send them somewhere else, put that address between the quotes on the line `const NOTIFY_EMAIL = "";`.
@@ -104,7 +104,7 @@ update public.reel_secret set pw_hash = extensions.crypt('new-password', extensi
 
 The site is just files, so any free static host works. Two easy options:
 
-**Option A — Netlify Drop (easiest):** go to [app.netlify.com/drop](https://app.netlify.com/drop) and drag this whole folder onto the page. You'll get a link immediately. Make a free account to keep it and to choose a nicer name (e.g. `dombos.netlify.app`). To update the site later, drag the folder in again.
+**Option A — Netlify Drop (easiest):** go to [app.netlify.com/drop](https://app.netlify.com/drop) and drag this whole folder onto the page. You'll get a link immediately. Make a free account to keep it and to choose a nicer name (e.g. `outofnature-wedding.netlify.app`). To update the site later, drag the folder in again.
 
 **Option B — GitHub Pages (this repository):** on GitHub, open the repo → **Settings → Pages** → *Source: Deploy from a branch* → choose the branch and `/ (root)` → **Save**. After a minute your site is at `https://<your-username>.github.io/<repo-name>/`. Note: on a free GitHub plan the repository must be **public** for Pages to work. That means anyone could read the files, including the quiz answers, though not the reel password, which lives in Supabase.
 

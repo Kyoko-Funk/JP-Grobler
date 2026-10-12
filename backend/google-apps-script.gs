@@ -1,6 +1,6 @@
 /**
  * =====================================================================
- *  Dombo's — RSVP spreadsheet + email notifications
+ *  Wedding site — RSVP spreadsheet + email notifications
  * ---------------------------------------------------------------------
  *  Paste this whole file into Extensions → Apps Script in your Google
  *  Sheet, then Deploy → New deployment → Web app (see README.md).
@@ -40,7 +40,7 @@ function doPost(e) {
 
 // Visiting the web-app link in a browser just confirms it's alive.
 function doGet() {
-  return ContentService.createTextOutput("Dombo's RSVP service is running. 🌿");
+  return ContentService.createTextOutput("The wedding RSVP service is running. 🌿");
 }
 
 /* ------------------------------------------------------------------ */
