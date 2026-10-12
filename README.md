@@ -40,9 +40,9 @@ backend/supabase-setup.sql      ← paste into Supabase (scrapbook storage + ree
 ## Step 0 · Personalise it (10 minutes)
 
 1. Open **`js/config.js`**. The couple's names (`names` and `surnames`) are already filled in — Jean-Pierre Grobler & Juan-Marie Van Zyl.
-2. The **quiz** is filled in. Each answer has its own `reply`; the right one(s) are marked `right: true` (a question can have more than one). Wrong answers tease and let the guest try again. `{0}` and `{1}` are swapped for the groom's and bride's first names. **One thing to check:** in the dogs question, swap the `"3"` option for their real number of dogs.
+2. The **quiz** is filled in. Each answer has its own `reply`; the right one(s) are marked `right: true` (a question can have more than one). Wrong answers tease and let the guest try again. `{0}` and `{1}` are swapped for the groom's and bride's first names. **Pug photo:** save a picture of Lily & Peanut as `images/pugs.jpg` — it drops in as a polaroid when guests get the dogs question right. No photo, no polaroid (nothing breaks).
 3. Check the venue blurb, directions, dress code, and the RSVP deadline (`rsvpBy`). The directions are based on what's published online about Out of Nature Country Lodge — please double-check them with the venue.
-4. Add a photo of the couple to the `images` folder named **`couple.jpg`**. A portrait (taller than wide) looks best in the arch frame.
+4. Add a photo of the couple to the `images` folder named **`couple.jpg`** (and, optionally, the pugs as **`pugs.jpg`**). A portrait (taller than wide) looks best in the arch frame.
 
 ---
 

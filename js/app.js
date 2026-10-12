@@ -172,6 +172,7 @@
           reply.className = "qcard__reply";
           reply.textContent = fmt(opt.reply);
           Confetti.fromElement(b, 30); // a small puff, not the full celebration
+          if (item.photo) showPolaroid(card, item);
           const next = document.createElement("button");
           next.className = "btn btn--ghost";
           next.style.marginTop = "1rem";
@@ -196,6 +197,24 @@
       $(".options", card).append(b);
     });
     swapCard(card);
+  }
+
+  // Drops a taped polaroid onto the card (e.g. the pugs). Skips quietly if the photo is missing.
+  function showPolaroid(card, item) {
+    const img = new Image();
+    img.onload = () => {
+      const fig = document.createElement("figure");
+      fig.className = "snap qcard__photo";
+      fig.style.setProperty("--tilt", "-3deg");
+      fig.innerHTML = "<figcaption></figcaption>";
+      img.alt = item.photoCaption || "";
+      fig.prepend(img);
+      $("figcaption", fig).textContent = item.photoCaption || "";
+      $(".qcard__reply", card).before(fig);
+      // keep the punchline and the next button in view on small screens
+      setTimeout(() => $(".btn", card)?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 350);
+    };
+    img.src = item.photo;
   }
 
   function renderEnd() {

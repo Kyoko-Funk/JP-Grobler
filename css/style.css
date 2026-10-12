@@ -164,6 +164,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .option.is-right { background: #e6ecdf; border-color: var(--sage); }
 .option.is-wrong { background: #f4e4da; border-color: #dcb59e; text-decoration: line-through; color: var(--ink-soft); }
 .option:disabled { cursor: default; }
+.qcard__photo { width: min(160px, 46%); margin: 1.6rem auto 0; padding: .55rem .55rem .7rem; cursor: default; }
+.qcard__photo figcaption { font-size: .95rem; margin-top: .45rem; }
+.qcard__photo:hover { transform: rotate(var(--tilt)); }
 .qcard__reply { min-height: 3.2em; margin: 1.2rem 0 0; font-style: italic; color: var(--sage-deep); }
 .qcard__reply.is-tease { color: var(--clay); }
 .shake { animation: shake .45s; }

@@ -117,10 +117,14 @@ window.SITE = {
       q: "How many dogs does he consider his actual children?",
       options: [
         { text: "1", reply: "Lower than he'd like. Try again." },
-        { text: "2", reply: "Lower than he'd like. Try again." },
-        { text: "3", reply: "Lower than he'd like. Try again." },   // ← swap 3 for their real number of dogs
+        { text: "2", reply: "Technically correct. Emotionally? Lower than he'd like. Try again." },
+        { text: "Just Lily & Peanut", reply: "Right names, wrong attitude. Try again." },
         { text: "All of them", right: true, reply: "Obviously. They come before you too." }
-      ]
+      ],
+      // A little polaroid that drops in on the right answer.
+      // Save the pug photo as images/pugs.jpg — until then, nothing shows.
+      photo: "images/pugs.jpg",
+      photoCaption: "Lily & Peanut, the firstborns"
     }
   ],
 
