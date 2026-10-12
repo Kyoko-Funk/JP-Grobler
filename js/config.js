@@ -189,7 +189,21 @@ window.SITE = {
   /* --- Scrapbook ----------------------------------------------------- */
   scrapbook: {
     maxVideoSeconds: 15,
-    maxFileMB: 50
+    maxFileMB: 50,
+    // Photos pinned to the wall from the start, before any guest uploads.
+    // Swap in real childhood photos (same file names), or delete an entry to remove it.
+    pinned: [
+      {
+        src: "images/archive-1.jpg", focus: "50% 22%", tilt: -3.2,
+        caption: "{1}, aged 5, spotting a guest in white. Some things never change.",
+        from: "the family archives"
+      },
+      {
+        src: "images/archive-2.jpg", focus: "50% 45%", tilt: 2.6,
+        caption: "{1}, aged 3. Picked her nose, picked her flowers, and eventually picked {0}. Questionable taste starts early.",
+        from: "the family archives"
+      }
+    ]
   },
 
   /* =====================================================================

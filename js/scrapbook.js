@@ -197,6 +197,7 @@
     fig.innerHTML = '<img loading="lazy" alt=""><figcaption><span></span><small></small></figcaption>';
     const img = $("img", fig);
     img.src = row.src;
+    if (row.focus) img.style.objectPosition = row.focus;
     img.alt = row.caption || "A photo from " + row.guest_name;
     $("figcaption span", fig).textContent = row.caption || "";
     $("figcaption small", fig).textContent = "— " + row.guest_name;
@@ -223,6 +224,10 @@
   }
 
   async function loadWall() {
+    // The "family archives" go up first, so the wall never starts empty.
+    const fmt = str => String(str).replace(/\{(\d)\}/g, (_, i) => S.names[i] || "");
+    (S.scrapbook.pinned || []).forEach((p, i) =>
+      addPhoto({ src: p.src, focus: p.focus, tilt: p.tilt, caption: fmt(p.caption), guest_name: p.from }, false, i));
     if (!Backend.hasStorage()) return;
     try {
       const rows = await Backend.listPhotos();
