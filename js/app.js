@@ -104,14 +104,16 @@
     if (near < Math.max(b.width, b.height) * 0.9) dodge(e.clientX, e.clientY);
   });
   // Touch screens can't hover, so the button leaps away the moment it's touched.
+  let lastPress = 0;
   no.addEventListener("pointerdown", e => {
     e.preventDefault();
+    lastPress = Date.now();
     dodge(e.clientX, e.clientY);
   });
   // Somebody managed it (probably with the keyboard). Respect.
   no.addEventListener("click", e => {
     e.preventDefault();
-    if (e.detail !== 0) return; // a real tap/click already made it dodge; only keyboard "catches" it
+    if (Date.now() - lastPress < 1000) return; // a tap/click already made it dodge; only the keyboard "catches" it
     whisper.textContent = S.gate.noCaught;
   });
   yes.addEventListener("click", () => {
