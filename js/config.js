@@ -67,61 +67,70 @@ window.SITE = {
   },
 
   /* --- The quiz (screen three) ---------------------------------------
-     `answer` is the position of the right option, counting from 0
-     (so 0 = first option, 1 = second, and so on).
-     EDIT these to real facts about the couple!                         */
+     One question per card. Each option has its own reply.
+     Mark the right answer(s) with  right: true  — a question can have
+     more than one. Wrong answers tease, then let the guest try again.
+     {0} = groom's first name, {1} = bride's first name.                */
   quiz: [
     {
-      q: "Where did these two first meet?",
-      options: ["At a church bazaar", "Leaning on the same farm fence", "A rugby match in Windhoek", "A dating app (they'll deny it)"],
-      answer: 2,
-      right: "Spot on. Some love stories start under the stars — theirs started next to a boerewors roll.",
-      wrong: "Ag nee. That's a lovely story, but it's not theirs."
+      tag: "The warm-up",
+      q: "Who's always running late?",
+      options: [
+        { text: "{1}", right: true, reply: "Fashionably. Always fashionably." },
+        { text: "{0}", right: true, reply: "He'll blame the dogs. Every time." }
+      ]
     },
     {
-      q: "Who said “I love you” first?",
-      options: ["{0}", "{1}", "Both at once — very rom-com", "The dog, honestly"],
-      answer: 0,
-      right: "Correct! And they've been unbearable ever since.",
-      wrong: "Wrong — and {1} would like that on the record."
+      tag: "The dress code",
+      q: "Are you planning on wearing white?",
+      options: [
+        { text: "Yes", reply: "Bold. There's only one woman in white here, and it isn't you. Try again." },
+        { text: "No", right: true, reply: "Good. We're going to get along just fine." }
+      ]
     },
     {
-      q: "What's the couple's ultimate Sunday plan?",
-      options: ["Brunch in town", "A braai that starts at 11 and ends at sunset", "Hiking at sunrise", "Church, then a very long nap"],
-      answer: 1,
-      right: "Of course. Fire, meat, family, repeat.",
-      wrong: "Nice try, but there was definitely a braai involved."
+      tag: "The footwear",
+      q: "Will the groom be wearing vellies with his suit?",
+      options: [
+        { text: "No", reply: "Have you met him? Try again." },
+        { text: "Yes", right: true, reply: "Obviously. Dusted off and everything." }
+      ]
     },
     {
-      q: "Who is the better driver on a gravel road?",
-      options: ["{0}", "{1}", "Whoever isn't holding the coffee", "Neither — the bakkie drives itself"],
-      answer: 1,
-      right: "Correct. {0} has accepted this. Mostly.",
-      wrong: "Bold guess. We'll pretend you didn't say that in front of them."
+      tag: "The planning",
+      q: "Do you trust the groom to have planned this wedding?",
+      options: [
+        { text: "Yes", reply: "Brave. Misguided, but brave." },
+        { text: "No", right: true, reply: "Smart. That's the bride's job." }
+      ]
     },
     {
-      q: "Which of these would they most likely name their first dog?",
-      options: ["Boerewors", "Kudu", "Ouma", "Sir Wagsalot"],
-      answer: 1,
-      right: "Kudu it is. Majestic, slightly stubborn — the dog, not the couple.",
-      wrong: "Cute, but no. The dog has more dignity than that."
+      tag: "The farm one",
+      q: "What's he more attached to: his bakkie or his bride?",
+      options: [
+        { text: "His bakkie", reply: "We'll pretend you didn't say that." },
+        { text: "His bride", right: true, reply: "Correct answer. Well done." }
+      ]
     },
     {
-      q: "How many cattle would {0} trade for {1}?",
-      options: ["Ten", "A hundred", "The whole herd", "Not one — {1} is priceless"],
-      answer: 3,
-      right: "Correct, and very diplomatic of you. Have some confetti.",
-      wrong: "Careful… {1} is reading this over your shoulder."
+      tag: "The dogs",
+      q: "How many dogs does he consider his actual children?",
+      options: [
+        { text: "1", reply: "Lower than he'd like. Try again." },
+        { text: "2", reply: "Lower than he'd like. Try again." },
+        { text: "3", reply: "Lower than he'd like. Try again." },   // ← swap 3 for their real number of dogs
+        { text: "All of them", right: true, reply: "Obviously. They come before you too." }
+      ]
     }
   ],
 
-  // What they see after the quiz, depending on how many they got right first time.
-  quizVerdicts: [
-    { min: 6, text: "A perfect score. Are you the maid of honour, or just very nosy?" },
-    { min: 4, text: "Very respectable. You've clearly been paying attention at family braais." },
-    { min: 2, text: "Not bad! A few more coffees with the couple and you'll get there." },
-    { min: 0, text: "Hmm. Have you two actually met? Don't worry — you're still invited." }
-  ],
+  // Shown after the last card.
+  quizEnd: {
+    eyebrow: "Results are in",
+    title: "You passed.",
+    text: "Barely. Now let's get you to the wedding.",
+    button: "On to the wedding"
+  },
 
   /* --- RSVP ---------------------------------------------------------- */
   rsvp: {

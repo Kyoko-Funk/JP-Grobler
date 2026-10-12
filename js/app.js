@@ -128,7 +128,7 @@
   /* ---------- THREE · the quiz ---------- */
   const stage = $("#quizStage");
   const bar = $("#quizBar");
-  let qi = 0, score = 0, quizStarted = false;
+  let qi = 0, quizStarted = false;
 
   function startQuiz() {
     if (quizStarted) return;
@@ -149,43 +149,45 @@
     const card = document.createElement("div");
     card.className = "card qcard";
     card.innerHTML = `
-      <p class="qcard__num">${String(qi + 1).padStart(2, "0")} / ${String(S.quiz.length).padStart(2, "0")}</p>
+      <p class="qcard__num"></p>
       <h3></h3>
       <div class="options"></div>
       <p class="qcard__reply"></p>`;
+    const num = `${String(qi + 1).padStart(2, "0")} / ${String(S.quiz.length).padStart(2, "0")}`;
+    $(".qcard__num", card).textContent = item.tag ? `${num} · ${item.tag}` : num;
     $("h3", card).textContent = fmt(item.q);
     const reply = $(".qcard__reply", card);
-    let firstTry = true;
+    // Two short answers sit side by side, like a proper yes/no.
+    if (item.options.length === 2) $(".options", card).classList.add("options--pair");
 
-    item.options.forEach((label, i) => {
+    item.options.forEach(opt => {
       const b = document.createElement("button");
       b.type = "button";
       b.className = "option";
-      b.textContent = fmt(label);
+      b.textContent = fmt(opt.text);
       b.addEventListener("click", () => {
-        if (i === item.answer) {
+        if (opt.right) {
           b.classList.add("is-right");
           $$(".option", card).forEach(o => (o.disabled = true));
           reply.className = "qcard__reply";
-          reply.textContent = fmt(item.right);
-          Confetti.fromElement(b, firstTry ? 45 : 20);
-          if (firstTry) score++;
+          reply.textContent = fmt(opt.reply);
+          Confetti.fromElement(b, 30); // a small puff, not the full celebration
           const next = document.createElement("button");
           next.className = "btn btn--ghost";
           next.style.marginTop = "1rem";
-          next.textContent = qi + 1 < S.quiz.length ? "Next question" : "See how I did";
+          next.textContent = qi + 1 < S.quiz.length ? "Next question" : "And the verdict is…";
           next.addEventListener("click", () => {
             qi++;
-            qi < S.quiz.length ? renderQuestion() : renderVerdict();
+            qi < S.quiz.length ? renderQuestion() : renderEnd();
           });
           card.append(next);
           setTimeout(() => next.focus({ preventScroll: true }), 50);
         } else {
-          firstTry = false;
           b.classList.add("is-wrong");
           b.disabled = true;
+          const tease = fmt(opt.reply);
           reply.className = "qcard__reply is-tease";
-          reply.textContent = fmt(item.wrong) + " Try again.";
+          reply.textContent = /try again/i.test(tease) ? tease : tease + " Try again.";
           card.classList.remove("shake");
           void card.offsetWidth; // restart the wiggle
           card.classList.add("shake");
@@ -196,18 +198,20 @@
     swapCard(card);
   }
 
-  function renderVerdict() {
+  function renderEnd() {
     bar.style.width = "100%";
-    const verdict = S.quizVerdicts.find(v => score >= v.min) || S.quizVerdicts[S.quizVerdicts.length - 1];
+    const end = S.quizEnd;
     const card = document.createElement("div");
     card.className = "card qcard verdict";
     card.innerHTML = `
-      <p class="eyebrow">Your score</p>
+      <p class="eyebrow"></p>
       <p class="script"></p>
       <p class="lede"></p>
-      <button class="btn btn--primary" style="margin-top:2rem">Show me the real details</button>`;
-    $(".script", card).textContent = `${score} out of ${S.quiz.length}`;
-    $(".lede", card).textContent = verdict.text;
+      <button class="btn btn--primary" style="margin-top:2rem"></button>`;
+    $(".eyebrow", card).textContent = end.eyebrow;
+    $(".script", card).textContent = end.title;
+    $(".lede", card).textContent = end.text;
+    $("button", card).textContent = end.button;
     $("button", card).addEventListener("click", () => { Confetti.celebrate(); go("main"); });
     swapCard(card);
     setTimeout(() => Confetti.celebrate(), 500);
