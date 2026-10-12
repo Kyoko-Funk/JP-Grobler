@@ -67,9 +67,12 @@ function handleRsvp(d) {
   const headcount = yesRows.reduce((sum, r) => sum + (Number(r[4]) || 0), 0);
   const noCount = rows.filter(r => r[2] === "No").length;
 
+  // e.g. "Oom Kobus is coming, plus one, no nuts."  /  "Tannie Sannie can't make it."
+  const diets = going ? String(d.dietary || "").split(",").map(x => x.trim()).filter(x => x && x !== "eats anything") : [];
+  const plusText = plus === 0 ? "" : plus === 1 ? "plus one" : `plus ${plus}`;
   const subject = going
-    ? `🎉 RSVP: ${clean(d.name, 60)} is coming${plus ? ` (+${plus})` : ""}`
-    : `😢 RSVP: ${clean(d.name, 60)} can't make it`;
+    ? [`${clean(d.name, 60)} is coming`, plusText].concat(diets).filter(Boolean).join(", ") + "."
+    : `${clean(d.name, 60)} can't make it.`;
   const body = [
     `Name: ${clean(d.name, 120)}`,
     `Attending: ${going ? "Yes" : "No"}`,

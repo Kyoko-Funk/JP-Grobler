@@ -16,6 +16,7 @@ window.SITE = {
 
   /* --- The day ------------------------------------------------------- */
   dateISO: "2027-04-10T16:00:00+02:00", // used for the countdown (Namibian time)
+  dateEndISO: "2027-04-10T23:30:00+02:00", // rough end time, only used for "Add to calendar"
   dateLong: "Saturday, 10 April 2027",
   dateShort: "10 · 04 · 2027",
   time: "16:00",
@@ -37,6 +38,15 @@ window.SITE = {
       "There's gravel at the end. Drive like your oupa is in the back seat."
     ],
     mapsQuery: "Out of Nature Country Lodge, Windhoek, Namibia", // what Google Maps searches for
+    // Venue photos — save them in /images with these names. Missing ones are simply skipped.
+    // The first one with  wide: true  becomes the banner.
+    photos: [
+      { src: "images/venue-1.jpg", wide: true, alt: "A rainbow in the sunset over the lawns at Out of Nature" },
+      { src: "images/venue-2.jpg", alt: "The garden gate and white roses, looking out to the mountains" },
+      { src: "images/venue-3.jpg", alt: "A table set with candles and flowers" },
+      { src: "images/venue-4.jpg", alt: "The stone-walled garden with the mountains behind" }
+    ],
+    photosCaption: "April at Out of Nature. Yes, the sky really does that.",
     accommodationNote:
       "Rooms and glamping tents on site are limited — book early if you'd like to stay over and skip the night drive."
   },
@@ -140,10 +150,11 @@ window.SITE = {
   rsvp: {
     maxPlusOnes: 4,
     dietary: [
-      { value: "none",        label: "Nothing — I'll eat anything that stood still long enough" },
-      { value: "vegetarian",  label: "Vegetarian (yes, at a farm wedding — we respect the bravery)" },
-      { value: "halaal",      label: "Halaal" },
-      { value: "no-nuts",     label: "No nuts, please — the ones at our table are quite enough 😉" }
+      // label = what guests see · short = what lands in your email and spreadsheet
+      { value: "none",        short: "eats anything", label: "Nothing — I'll eat anything that stood still long enough" },
+      { value: "vegetarian",  short: "vegetarian",    label: "Vegetarian — yes, even at a farm wedding. We respect the bravery." },
+      { value: "halaal",      short: "halaal",        label: "Halaal — the kitchen will look after you" },
+      { value: "no-nuts",     short: "no nuts",       label: "Nut allergy — no nuts on my plate, please (the ones at the table are quite enough 😉)" }
     ],
     thanksYes: "Baie dankie! Your seat is warm and waiting. Practise your langarm.",
     thanksNo: "We're sad, but we understand. We'll raise a glass for you — and maybe talk about you a little."

@@ -242,6 +242,49 @@
   S.venue.directions.forEach(t => { const li = document.createElement("li"); li.textContent = t; $("#directionsList").append(li); });
   S.dressCode.lines.forEach(t => { const li = document.createElement("li"); li.textContent = t; $("#dressList").append(li); });
 
+  /* Add to calendar: a Google Calendar link, plus an .ics file for iPhone/Outlook. */
+  (function calendarLinks() {
+    const start = new Date(S.dateISO), end = new Date(S.dateEndISO || +start + 6 * 36e5);
+    const stamp = d => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+    const title = `${S.names[0]} & ${S.names[1]}'s wedding`;
+    const where = `${S.venue.name}, ${S.venue.address}`;
+    const details = `Ceremony at ${S.time}. Please arrive by ${S.arriveBy}.`;
+    $("#gcalLink").href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      `&text=${encodeURIComponent(title)}&dates=${stamp(start)}/${stamp(end)}` +
+      `&location=${encodeURIComponent(where)}&details=${encodeURIComponent(details)}`;
+    const esc = t => t.replace(/[\\;,]/g, m => "\\" + m);
+    const ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//wedding//invite//EN", "BEGIN:VEVENT",
+      `UID:wedding-${stamp(start)}@invite`, `DTSTAMP:${stamp(new Date())}`,
+      `DTSTART:${stamp(start)}`, `DTEND:${stamp(end)}`,
+      `SUMMARY:${esc(title)}`, `LOCATION:${esc(where)}`, `DESCRIPTION:${esc(details)}`,
+      "BEGIN:VALARM", "TRIGGER:-P1D", "ACTION:DISPLAY", "DESCRIPTION:Wedding tomorrow! Polish the boots.", "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"
+    ].join("\r\n");
+    $("#icsLink").href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+  })();
+
+  /* Venue photos: placed in order, each shown once it loads; missing ones stay hidden. */
+  (function venueGallery() {
+    const wrap = $("#venueGallery");
+    (S.venue.photos || []).forEach(p => {
+      const fig = document.createElement("figure");
+      fig.hidden = true;
+      if (p.wide) fig.className = "gallery__wide";
+      const img = new Image();
+      img.alt = p.alt || "";
+      img.onload = () => {
+        fig.hidden = false;
+        wrap.hidden = false;
+        $("#venueGalleryCaption").textContent = S.venue.photosCaption || "";
+      };
+      img.src = p.src;
+      fig.append(img);
+      fig.addEventListener("click", () => window.openLightbox && window.openLightbox(p.src, "", S.venue.name));
+      wrap.append(fig);
+    });
+  })();
+
   let mainStarted = false;
   function startMain() {
     store.set(PASSED_KEY, "1");
@@ -320,7 +363,7 @@
       name,
       attending: going ? "Yes" : "No",
       plusOnes: going ? Number(fd.get("plusOnes") || 0) : 0,
-      dietary: dietValues.join(", "),
+      dietary: dietValues.map(v => (S.rsvp.dietary.find(d => d.value === v) || {}).short || v).join(", "),
       dietOther: going ? (fd.get("dietOther") || "").trim() : "",
       note: (fd.get("note") || "").trim(),
       website: fd.get("website") || ""

@@ -245,6 +245,12 @@
     lb.hidden = false;
     $(".lightbox__close", lb).focus();
   }
+  window.openLightbox = (src, caption, name) => {
+    $("img", lb).src = src;
+    $("figcaption", lb).textContent = [caption, name && (caption ? "— " + name : name)].filter(Boolean).join(" ");
+    lb.hidden = false;
+    $(".lightbox__close", lb).focus();
+  };
   const closeLb = () => { lb.hidden = true; $("img", lb).src = ""; };
   lb.addEventListener("click", e => { if (e.target === lb || e.target.classList.contains("lightbox__close")) closeLb(); });
   addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
