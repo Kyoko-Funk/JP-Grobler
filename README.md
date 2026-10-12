@@ -42,7 +42,7 @@ backend/supabase-setup.sql      ← paste into Supabase (scrapbook storage + ree
 1. Open **`js/config.js`**. The couple's names (`names` and `surnames`) are already filled in — Jean-Pierre Grobler & Juan-Marie Van Zyl.
 2. The **quiz** is filled in. Each answer has its own `reply`; the right one(s) are marked `right: true` (a question can have more than one). Wrong answers tease and let the guest try again. `{0}` and `{1}` are swapped for the groom's and bride's first names. **Pug photo:** save a picture of Lily & Peanut as `images/pugs.jpg` — it drops in as a polaroid when guests get the dogs question right. No photo, no polaroid (nothing breaks).
 3. Check the venue blurb, directions, dress code, the RSVP deadline (`rsvpBy`), the **order of the day** (`schedule` — times are a rough guide until confirmed), **staying over** (`stay` — the lodge's phone, email and website) and **gifts** (`gifts`). The directions are based on what's published online about Out of Nature Country Lodge — please double-check them with the venue.
-4. Add a photo of the couple to the `images` folder named **`couple.jpg`** (and, optionally, the pugs as **`pugs.jpg`**, venue photos are already in as `venue-1.jpg` to `venue-4.jpg`). A portrait (taller than wide) looks best in the arch frame.
+4. ⚠️ **Replace `images/couple.jpg`** with a real photo of Jean-Pierre & Juan-Marie — the one there now is a stand-in of strangers. Same for `pugs.jpg` (the dogs-question polaroid) and `pug-bum.jpg` (shown to guests who decline) if you have real ones of Lily & Peanut. (Venue photos are already in as `venue-1.jpg` to `venue-4.jpg`). A portrait (taller than wide) looks best in the arch frame.
 
 ---
 

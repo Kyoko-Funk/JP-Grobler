@@ -407,6 +407,14 @@
     try {
       const res = payload.website ? { ok: true } : await Backend.notify(payload);
       $("#rsvpThanksText").textContent = going ? S.rsvp.thanksYes : S.rsvp.thanksNo;
+      const dp = $("#declinePhoto");
+      dp.hidden = going || !S.rsvp.declinePhoto;
+      if (!dp.hidden) {
+        $("img", dp).src = S.rsvp.declinePhoto;
+        $("img", dp).alt = "A pug turning its back";
+        $("figcaption", dp).textContent = S.rsvp.declinePhotoCaption || "";
+        $("img", dp).onerror = () => (dp.hidden = true);
+      }
       $("#rsvpThanks .demo-note")?.remove();
       if (res.demo) {
         const p = document.createElement("p");

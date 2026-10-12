@@ -164,6 +164,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .option.is-right { background: #e6ecdf; border-color: var(--sage); }
 .option.is-wrong { background: #f4e4da; border-color: #dcb59e; text-decoration: line-through; color: var(--ink-soft); }
 .option:disabled { cursor: default; }
+.qcard__photo img { object-position: 50% 50%; }
+.thanks__photo { width: min(170px, 50%); margin: 1.2rem auto 1.4rem; padding: .55rem .55rem .7rem; cursor: default; --tilt: 3deg; }
+.thanks__photo img { object-position: 50% 45%; }
+.thanks__photo figcaption { font-size: .95rem; margin-top: .45rem; }
+.thanks__photo:hover { transform: rotate(var(--tilt)); }
 .qcard__photo { width: min(160px, 46%); margin: 1.6rem auto 0; padding: .55rem .55rem .7rem; cursor: default; }
 .qcard__photo figcaption { font-size: .95rem; margin-top: .45rem; }
 .qcard__photo:hover { transform: rotate(var(--tilt)); }

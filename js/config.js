@@ -180,7 +180,10 @@ window.SITE = {
       { value: "no-nuts",     short: "no nuts",       label: "No nuts, please — the ones at our table are quite enough 😉" }
     ],
     thanksYes: "Baie dankie! Your seat is warm and waiting. Practise your langarm.",
-    thanksNo: "We're sad, but we understand. We'll raise a glass for you — and maybe talk about you a little."
+    thanksNo: "We're sad, but we understand. We'll raise a glass for you — and maybe talk about you a little.",
+    // Shown only to guests who decline. Remove these two lines to switch it off.
+    declinePhoto: "images/pug-bum.jpg",
+    declinePhotoCaption: "Lily's official response."
   },
 
   /* --- Scrapbook ----------------------------------------------------- */
