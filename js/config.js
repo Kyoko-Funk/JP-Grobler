@@ -30,7 +30,7 @@ window.SITE = {
       "Tucked into the camelthorn and the long golden grass, Out of Nature is the kind of place " +
       "that makes city folk go quiet and farm folk feel right at home. Big skies, a bigger " +
       "sunset, and enough space for the tannies to dance without anyone getting a heel in the shin.",
-    address: "±30 km south of Windhoek, off the B1, Khomas Region, Namibia",
+    address: "Farm Gross Haigamas, B1 South — ±30 km south of Windhoek, Khomas Region, Namibia",
     directions: [
       "From Windhoek, take the B1 south towards Rehoboth.",
       "About 30 km out of town, keep an eye out for the Out of Nature signs on the B1.",
@@ -41,14 +41,35 @@ window.SITE = {
     // Venue photos — save them in /images with these names. Missing ones are simply skipped.
     // The first one with  wide: true  becomes the banner.
     photos: [
-      { src: "images/venue-1.jpg", wide: true, alt: "A rainbow in the sunset over the lawns at Out of Nature" },
-      { src: "images/venue-2.jpg", alt: "The garden gate and white roses, looking out to the mountains" },
-      { src: "images/venue-3.jpg", alt: "A table set with candles and flowers" },
-      { src: "images/venue-4.jpg", alt: "The stone-walled garden with the mountains behind" }
+      { src: "images/venue-1.jpg", wide: true, alt: "The reception hall at dusk, lit up with fairy lights" },
+      { src: "images/venue-2.jpg", alt: "The rose garden and brick path, with sunrays over the mountains" },
+      { src: "images/venue-3.jpg", alt: "White roses seen through the hall's windows" },
+      { src: "images/venue-4.jpg", alt: "A brick path through the wildflowers" }
     ],
-    photosCaption: "April at Out of Nature. Yes, the sky really does that.",
-    accommodationNote:
-      "Rooms and glamping tents on site are limited — book early if you'd like to stay over and skip the night drive."
+    photosCaption: "Roses by day, fairy lights by night. Your outfit has a lot to live up to."
+  },
+
+  /* --- Order of the day (rough guide — adjust once the times are final) */
+  schedule: [
+    { time: "15:30", what: "Arrive, park, find shade", note: "Early is on time. On time is late." },
+    { time: "16:00", what: "The ceremony", note: "Phones away, tissues out." },
+    { time: "16:45", what: "Drinks, canapés & golden-hour photos", note: "The light out here is unfair. Use it." },
+    { time: "18:30", what: "Dinner & speeches", note: "The best man has been asked to keep it under ten minutes. We'll see." },
+    { time: "20:30", what: "First dance, then the floor is yours", note: "" },
+    { time: "Late", what: "Langarm until the tannies retire", note: "Pace yourself." }
+  ],
+
+  /* --- Staying over -------------------------------------------------- */
+  stay: {
+    text: "Out of Nature has rooms and glamping tents on site — but not many. Book early, skip the night drive back to Windhoek, and be first at breakfast to hear who did what on the dance floor.",
+    howToBook: "Book directly with Out of Nature Country Lodge (they're on Facebook and the usual booking sites).",
+    contact: ""   // ← add a phone number or email here if you get one, e.g. "+264 81 000 0000"
+  },
+
+  /* --- Gifts --------------------------------------------------------- */
+  gifts: {
+    text: "Honestly, your being there is the gift. But if you insist on spoiling them, there'll be a wishing well on the day — every contribution goes towards the honeymoon.",
+    small: "No toasters were harmed in the making of this wedding."
   },
 
   /* --- Dress code ---------------------------------------------------- */

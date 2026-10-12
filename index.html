@@ -111,7 +111,6 @@
         <div class="venue__text">
           <h3 class="h3">About <span data-fill="venueNickname"></span></h3>
           <p data-fill="venue.blurb"></p>
-          <p class="small muted" data-fill="venue.accommodationNote"></p>
           <h3 class="h3">Getting there</h3>
           <ol class="steps" id="directionsList"></ol>
         </div>
@@ -122,6 +121,26 @@
 
       <div class="gallery" id="venueGallery" hidden aria-label="Photos of the venue"></div>
       <p class="gallery__caption" id="venueGalleryCaption"></p>
+
+      <div class="extras">
+        <article class="card extras__day reveal">
+          <h3 class="h3">How the day unfolds</h3>
+          <ol class="timeline" id="timeline"></ol>
+          <p class="small muted">A rough guide — the bride runs a tight ship, the groom less so.</p>
+        </article>
+        <div class="extras__side">
+          <article class="card reveal">
+            <h3 class="h3">Staying over</h3>
+            <p data-fill="stay.text"></p>
+            <p class="small"><span data-fill="stay.howToBook"></span> <strong id="stayContact"></strong></p>
+          </article>
+          <article class="card reveal">
+            <h3 class="h3">Gifts</h3>
+            <p data-fill="gifts.text"></p>
+            <p class="small muted"><em data-fill="gifts.small"></em></p>
+          </article>
+        </div>
+      </div>
     </section>
 
     <!-- FIVE · RSVP -->

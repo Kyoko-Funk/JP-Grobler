@@ -264,6 +264,17 @@
     $("#icsLink").href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
   })();
 
+  /* Order of the day */
+  (S.schedule || []).forEach(item => {
+    const li = document.createElement("li");
+    li.innerHTML = "<time></time><div><strong></strong><span></span></div>";
+    $("time", li).textContent = item.time;
+    $("strong", li).textContent = item.what;
+    $("span", li).textContent = item.note || "";
+    $("#timeline").append(li);
+  });
+  if (S.stay && S.stay.contact) $("#stayContact").textContent = S.stay.contact;
+
   /* Venue photos: placed in order, each shown once it loads; missing ones stay hidden. */
   (function venueGallery() {
     const wrap = $("#venueGallery");
