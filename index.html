@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>You're Invited · Dombo's</title>
+  <meta name="description" content="An invitation to celebrate at Dombo's — 10 April 2027.">
+  <meta property="og:title" content="You're invited to Dombo's">
+  <meta property="og:description" content="10 April 2027 · 16:00 · Something lovely is happening. Open with care.">
+  <meta name="theme-color" content="#f6f1e7">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <!-- ============ ONE · ARRIVAL ============ -->
+  <section id="arrival" class="screen screen--active" aria-label="Welcome">
+    <div class="arrival">
+      <p class="eyebrow fade" style="--d:0.2s">Together with their families</p>
+      <figure class="arch fade" style="--d:0.5s">
+        <img id="couplePhoto" alt="The happy couple" src="images/couple-placeholder.svg">
+      </figure>
+      <h1 class="names fade" style="--d:0.9s">
+        <span data-name="0"></span>
+        <span class="amp">&amp;</span>
+        <span data-name="1"></span>
+      </h1>
+      <p class="arrival__line fade" style="--d:1.2s">request the pleasure of your company at</p>
+      <p class="script fade" style="--d:1.4s" data-fill="venueNickname"></p>
+      <p class="date fade" style="--d:1.7s" data-fill="dateShort"></p>
+      <button class="btn btn--primary fade" style="--d:2.1s" id="beginBtn">Open the invitation</button>
+      <button class="link-btn fade" style="--d:2.4s" id="skipBtn" hidden>Been here before? Skip to the details</button>
+    </div>
+  </section>
+
+  <!-- ============ TWO · THE GATE ============ -->
+  <section id="gate" class="screen" aria-label="A small question">
+    <div class="card card--narrow gate">
+      <p class="eyebrow">A small formality</p>
+      <h2 class="h2" data-fill="gate.question"></h2>
+      <div class="gate__arena" id="gateArena">
+        <button class="btn btn--primary" id="yesBtn"></button>
+        <button class="btn btn--ghost" id="noBtn"></button>
+      </div>
+      <p class="gate__whisper" id="gateWhisper" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- ============ THREE · THE QUIZ ============ -->
+  <section id="quiz" class="screen" aria-label="A little quiz">
+    <div class="quiz">
+      <p class="eyebrow">How well do you know them?</p>
+      <div class="quiz__progress" aria-hidden="true"><span id="quizBar"></span></div>
+      <div id="quizStage" class="quiz__stage" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ============ FOUR–SIX · THE REAL STUFF ============ -->
+  <div id="main" class="screen screen--scroll" aria-label="Wedding details">
+    <nav class="topnav" aria-label="Sections">
+      <a href="#details">The Day</a>
+      <a href="#rsvp">RSVP</a>
+      <a href="#scrapbook">Scrapbook</a>
+    </nav>
+
+    <header class="hero reveal">
+      <p class="eyebrow">You passed. Welcome in.</p>
+      <h2 class="names names--small"><span data-name="0"></span> <span class="amp">&amp;</span> <span data-name="1"></span></h2>
+      <p class="script" data-fill="venueNickname"></p>
+      <div class="countdown" id="countdown" aria-label="Countdown to the wedding"></div>
+    </header>
+
+    <!-- FOUR · DETAILS -->
+    <section id="details" class="block">
+      <div class="block__head reveal">
+        <p class="eyebrow">The details</p>
+        <h2 class="h2">The real stuff</h2>
+        <p class="lede">Here's everything you actually need to know. Screenshot it — signal at the venue is between you and the Lord.</p>
+      </div>
+
+      <div class="grid3">
+        <article class="tile reveal">
+          <span class="tile__icon" aria-hidden="true">❦</span>
+          <h3>When</h3>
+          <p data-fill="dateLong"></p>
+          <p class="big" data-fill="time"></p>
+          <p class="small">Please arrive by <strong data-fill="arriveBy"></strong>. “Namibian time” is not an accepted excuse on this particular day.</p>
+        </article>
+        <article class="tile reveal">
+          <span class="tile__icon" aria-hidden="true">✿</span>
+          <h3>Where</h3>
+          <p class="tile__venue" data-fill="venue.name"></p>
+          <p class="small" data-fill="venue.address"></p>
+          <a class="link" id="mapsLink" target="_blank" rel="noopener">Open in Google Maps →</a>
+        </article>
+        <article class="tile reveal">
+          <span class="tile__icon" aria-hidden="true">❧</span>
+          <h3>Wear</h3>
+          <p class="tile__venue" data-fill="dressCode.title"></p>
+          <ul class="small list" id="dressList"></ul>
+        </article>
+      </div>
+
+      <div class="venue reveal">
+        <div class="venue__text">
+          <h3 class="h3">About <span data-fill="venueNickname"></span></h3>
+          <p data-fill="venue.blurb"></p>
+          <p class="small muted" data-fill="venue.accommodationNote"></p>
+          <h3 class="h3">Getting there</h3>
+          <ol class="steps" id="directionsList"></ol>
+        </div>
+        <div class="venue__map">
+          <iframe id="mapFrame" title="Map to the venue" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- FIVE · RSVP -->
+    <section id="rsvp" class="block block--tinted">
+      <div class="block__head reveal">
+        <p class="eyebrow">Kindly reply by <span data-fill="rsvpBy"></span></p>
+        <h2 class="h2">Will we see you there?</h2>
+        <p class="lede">The caterers need numbers, and the couple needs to know who to be offended by.</p>
+      </div>
+
+      <form id="rsvpForm" class="form card reveal" novalidate>
+        <label class="field">
+          <span>Your name (or names, if you're replying as a team)</span>
+          <input name="name" required maxlength="120" autocomplete="name" placeholder="e.g. Tannie Marietjie &amp; Oom Kobus">
+        </label>
+
+        <fieldset class="field">
+          <legend>Are you coming?</legend>
+          <div class="choice-row">
+            <label class="choice"><input type="radio" name="attending" value="yes" required><span>Joyfully, yes</span></label>
+            <label class="choice"><input type="radio" name="attending" value="no"><span>Sadly, no <em>(we'll discuss this later)</em></span></label>
+          </div>
+        </fieldset>
+
+        <div class="if-attending" id="ifAttending" hidden>
+          <label class="field">
+            <span>How many people are you bringing <em>besides yourself</em>?<br><small>Real humans only. Imaginary friends and dogs dine elsewhere.</small></span>
+            <select name="plusOnes" id="plusOnes"></select>
+          </label>
+
+          <fieldset class="field">
+            <legend>Any dietary needs?</legend>
+            <div class="checks" id="dietChecks"></div>
+            <label class="field field--inline">
+              <span>Anything else the kitchen should know?</span>
+              <input name="dietOther" maxlength="200" placeholder="Allergies, intolerances, strong opinions about pineapple…">
+            </label>
+          </fieldset>
+        </div>
+
+        <label class="field">
+          <span>A note for the couple <small>(optional, but they'll read it on the honeymoon)</small></span>
+          <textarea name="note" rows="4" maxlength="1000" placeholder="Advice, blessings, embarrassing stories…"></textarea>
+        </label>
+
+        <!-- spam trap: real people never see or fill this -->
+        <input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <p class="form__error" id="rsvpError" role="alert"></p>
+        <button class="btn btn--primary" type="submit" id="rsvpSubmit">Send my RSVP</button>
+      </form>
+
+      <div class="card thanks reveal" id="rsvpThanks" hidden>
+        <p class="script">Dankie!</p>
+        <p id="rsvpThanksText" class="lede"></p>
+        <button class="link-btn" id="rsvpAgain">Need to change something? Send another reply</button>
+      </div>
+    </section>
+
+    <!-- SIX · SCRAPBOOK -->
+    <section id="scrapbook" class="block">
+      <div class="block__head reveal">
+        <p class="eyebrow">The scrapbook</p>
+        <h2 class="h2">Leave your mark</h2>
+        <p class="lede">Post a cheeky photo for the wall, or record a short video message (15 seconds, max). Videos stay sealed until the honeymoon, so be as sentimental — or as scandalous — as you like.</p>
+      </div>
+
+      <form id="uploadForm" class="form card upload reveal" novalidate>
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" class="tab tab--on" data-kind="photo" aria-selected="true">📷 Photo</button>
+          <button type="button" role="tab" class="tab" data-kind="video" aria-selected="false">🎥 Video message</button>
+        </div>
+
+        <label class="drop" id="drop">
+          <input type="file" id="fileInput" accept="image/*">
+          <span class="drop__text" id="dropText">Tap to choose a photo<br><small>or drag one in here</small></span>
+          <span class="drop__preview" id="dropPreview"></span>
+        </label>
+
+        <label class="field">
+          <span>Your name</span>
+          <input name="guestName" required maxlength="80" placeholder="So they know who to thank (or blame)">
+        </label>
+        <label class="field">
+          <span>Caption</span>
+          <input name="caption" maxlength="200" placeholder="e.g. Exhibit A: the groom's dance moves, 2019">
+        </label>
+
+        <div class="progress" id="uploadProgress" hidden><span></span></div>
+        <p class="form__error" id="uploadError" role="alert"></p>
+        <p class="form__ok" id="uploadOk" aria-live="polite"></p>
+        <button class="btn btn--primary" type="submit" id="uploadSubmit">Pin it to the scrapbook</button>
+      </form>
+
+      <p class="sealed reveal" id="sealedCount"></p>
+      <div class="wall" id="wall" aria-live="polite"></div>
+      <p class="muted small center" id="wallEmpty">The wall is empty. Somebody has to go first — might as well be you.</p>
+    </section>
+
+    <footer class="footer">
+      <p class="script" data-fill="venueNickname"></p>
+      <p class="small muted">Made with love, a little mischief, and zero help from the couple.</p>
+    </footer>
+  </div>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" aria-label="Close">×</button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/backend.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/scrapbook.js"></script>
+</body>
+</html>

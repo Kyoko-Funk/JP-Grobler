@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The Farewell Reel</title>
+  <meta name="theme-color" content="#f6f1e7">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎞</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .reel { width: 100%; max-width: 64rem; text-align: center; }
+    .reel canvas { width: 100%; aspect-ratio: 16 / 9; background: var(--paper); box-shadow: var(--shadow); border-radius: var(--radius); display: block; }
+    .reel__controls { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; margin: 1.6rem 0 .6rem; }
+    .reel__status { min-height: 1.6em; font-style: italic; color: var(--ink-soft); }
+    .reel__list { list-style: none; padding: 0; margin: 2.5rem auto 0; max-width: 34rem; text-align: left; }
+    .reel__list li { display: flex; justify-content: space-between; gap: 1rem; padding: .7rem 0; border-bottom: 1px solid var(--linen); }
+    .reel__list button { background: none; border: 0; color: var(--sage-deep); cursor: pointer; font-style: italic; white-space: nowrap; }
+    .lock input { text-align: center; letter-spacing: .2em; margin: 1.4rem 0 1rem; }
+    .stage-wrap:fullscreen { background: #000; display: grid; place-items: center; }
+    .stage-wrap:fullscreen canvas { max-height: 100vh; width: auto; max-width: 100vw; box-shadow: none; border-radius: 0; }
+  </style>
+</head>
+<body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <section class="screen screen--active" id="lockScreen">
+    <form class="card card--narrow lock" id="lockForm">
+      <p class="eyebrow">For the newlyweds' eyes only</p>
+      <p class="script">The Farewell Reel</p>
+      <p class="lede">Every video message from your guests, stitched into one reel. If you're not on honeymoon right now, kindly put the phone down and walk away. We'll know.</p>
+      <input type="password" id="pw" autocomplete="off" placeholder="The secret word" aria-label="Password" required>
+      <p class="form__error" id="lockError" role="alert"></p>
+      <button class="btn btn--primary" id="unlockBtn">Unlock</button>
+    </form>
+  </section>
+
+  <section class="screen" id="reelScreen">
+    <div class="reel">
+      <p class="eyebrow">With love from everyone at <span data-fill="venueNickname"></span></p>
+      <h1 class="names names--small"><span data-name="0"></span> <span class="amp">&amp;</span> <span data-name="1"></span></h1>
+      <div class="stage-wrap" id="stageWrap"><canvas id="stage" width="1280" height="720"></canvas></div>
+      <div class="reel__controls">
+        <button class="btn btn--primary" id="playBtn">Play the reel</button>
+        <button class="btn btn--ghost" id="fullBtn">Full screen</button>
+        <button class="btn btn--ghost" id="saveBtn">Save as a video file</button>
+      </div>
+      <p class="reel__status" id="status" aria-live="polite"></p>
+      <ol class="reel__list" id="clipList"></ol>
+    </div>
+  </section>
+
+  <script src="js/config.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/backend.js"></script>
+  <script src="js/montage.js"></script>
+</body>
+</html>
