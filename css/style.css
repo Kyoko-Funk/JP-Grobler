@@ -223,6 +223,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .extras__side { display: grid; gap: 1.4rem; }
 .extras .h3 { margin-top: 0; }
 .extras__side .card:nth-child(2) { transition-delay: .12s; }
+.contact { list-style: none; padding: 0; margin: .4rem 0 0; display: grid; gap: .35rem; font-size: .95em; }
+.contact li { display: grid; grid-template-columns: 5rem 1fr; gap: .5rem; align-items: baseline; }
+.contact span { font-family: var(--display); text-transform: uppercase; letter-spacing: .1em; font-size: .7rem; color: var(--ink-soft); }
+.contact a { justify-self: start; }
+@media (max-width: 400px) { .contact a { font-size: .94em; } }
 .timeline { list-style: none; padding: 0; margin: 1.4rem 0 1.2rem; position: relative; }
 .timeline::before { content: ""; position: absolute; left: 4.1rem; top: .6rem; bottom: .6rem; width: 1px; background: var(--sage-soft); }
 .timeline li { display: grid; grid-template-columns: 3.4rem 1fr; gap: 1.4rem; padding: .55rem 0; position: relative; }

@@ -273,7 +273,28 @@
     $("span", li).textContent = item.note || "";
     $("#timeline").append(li);
   });
-  if (S.stay && S.stay.contact) $("#stayContact").textContent = S.stay.contact;
+  /* Staying over: tappable call / WhatsApp / email / website links */
+  (function stayContact() {
+    const st = S.stay || {};
+    const digits = (st.phone || "").replace(/[^\d]/g, "");
+    const rows = [
+      st.phone && ["Call", st.phone, "tel:+" + digits],
+      st.phone && ["WhatsApp", st.phone, "https://wa.me/" + digits],
+      st.email && ["Email", st.email, "mailto:" + st.email + "?subject=" + encodeURIComponent(`Booking for ${S.names[0]} & ${S.names[1]}'s wedding, ${S.dateLong}`)],
+      st.website && ["Website", st.website.replace(/^https?:\/\/(www\.)?/, ""), st.website]
+    ].filter(Boolean);
+    rows.forEach(([label, text, href]) => {
+      const li = document.createElement("li");
+      li.innerHTML = '<span></span><a class="link"></a>';
+      $("span", li).textContent = label;
+      const a = $("a", li);
+      // long emails may wrap only after the "@"
+      text.split(/(?<=@)/).forEach((part, i) => { if (i) a.append(document.createElement("wbr")); a.append(part); });
+      a.href = href;
+      if (href.startsWith("http")) { a.target = "_blank"; a.rel = "noopener"; }
+      $("#stayContact").append(li);
+    });
+  })();
 
   /* Venue photos: placed in order, each shown once it loads; missing ones stay hidden. */
   (function venueGallery() {

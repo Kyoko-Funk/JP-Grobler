@@ -62,8 +62,10 @@ window.SITE = {
   /* --- Staying over -------------------------------------------------- */
   stay: {
     text: "Out of Nature has rooms and glamping tents on site — but not many. Book early, skip the night drive back to Windhoek, and be first at breakfast to hear who did what on the dance floor.",
-    howToBook: "Book directly with Out of Nature Country Lodge (they're on Facebook and the usual booking sites).",
-    contact: ""   // ← add a phone number or email here if you get one, e.g. "+264 81 000 0000"
+    howToBook: "Book directly with Out of Nature — and mention the wedding:",
+    phone: "+264 81 129 4055",
+    email: "reservations@outofnature.com.na",
+    website: "https://www.outofnature.biz"
   },
 
   /* --- Gifts --------------------------------------------------------- */
