@@ -224,6 +224,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .gallery img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9) sepia(.08); transition: transform 1.2s var(--ease); }
 .gallery figure:hover img { transform: scale(1.04); }
 .extras { display: grid; gap: 1.4rem; margin-top: 5rem; align-items: start; }
+.extras--top { margin-top: 0; }
+.hero__rsvp { display: inline-block; margin-top: 2.4rem; text-decoration: none; }
+section[id], .block[id] { scroll-margin-top: 4rem; } /* so the sticky menu doesn't cover headings */
 @media (min-width: 860px) { .extras { grid-template-columns: 1.15fr 1fr; } }
 .extras__side { display: grid; gap: 1.4rem; }
 .extras .h3 { margin-top: 0; }

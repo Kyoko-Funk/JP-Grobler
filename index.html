@@ -73,6 +73,7 @@
       <h2 class="names names--small"><span data-name="0"></span> <span class="amp">&amp;</span> <span data-name="1"></span></h2>
       <p class="script" data-fill="venueNickname"></p>
       <div class="countdown" id="countdown" aria-label="Countdown to the wedding"></div>
+      <a class="btn btn--primary hero__rsvp" href="#rsvp">RSVP by <span data-fill="rsvpBy"></span></a>
     </header>
 
     <!-- FOUR · DETAILS -->
@@ -121,27 +122,6 @@
 
       <div class="gallery" id="venueGallery" hidden aria-label="Photos of the venue"></div>
       <p class="gallery__caption" id="venueGalleryCaption"></p>
-
-      <div class="extras">
-        <article class="card extras__day reveal">
-          <h3 class="h3">How the day unfolds</h3>
-          <ol class="timeline" id="timeline"></ol>
-          <p class="small muted">A rough guide — the bride runs a tight ship, the groom less so.</p>
-        </article>
-        <div class="extras__side">
-          <article class="card reveal">
-            <h3 class="h3">Staying over</h3>
-            <p data-fill="stay.text"></p>
-            <p class="small" data-fill="stay.howToBook"></p>
-            <ul class="contact" id="stayContact"></ul>
-          </article>
-          <article class="card reveal">
-            <h3 class="h3">Gifts</h3>
-            <p data-fill="gifts.text"></p>
-            <p class="small muted"><em data-fill="gifts.small"></em></p>
-          </article>
-        </div>
-      </div>
     </section>
 
     <!-- FIVE · RSVP -->
@@ -199,6 +179,34 @@
         <figure class="snap thanks__photo" id="declinePhoto" hidden><img alt=""><figcaption></figcaption></figure>
         <p id="rsvpThanksText" class="lede"></p>
         <button class="link-btn" id="rsvpAgain">Need to change something? Send another reply</button>
+      </div>
+    </section>
+
+    <!-- GOOD TO KNOW · order of the day, staying over, gifts -->
+    <section id="good-to-know" class="block">
+      <div class="block__head reveal">
+        <p class="eyebrow">Good to know</p>
+        <h2 class="h2">The finer print</h2>
+      </div>
+      <div class="extras extras--top">
+        <article class="card extras__day reveal">
+          <h3 class="h3">How the day unfolds</h3>
+          <ol class="timeline" id="timeline"></ol>
+          <p class="small muted">A rough guide — the bride runs a tight ship, the groom less so.</p>
+        </article>
+        <div class="extras__side">
+          <article class="card reveal">
+            <h3 class="h3">Staying over</h3>
+            <p data-fill="stay.text"></p>
+            <p class="small" data-fill="stay.howToBook"></p>
+            <ul class="contact" id="stayContact"></ul>
+          </article>
+          <article class="card reveal">
+            <h3 class="h3">Gifts</h3>
+            <p data-fill="gifts.text"></p>
+            <p class="small muted"><em data-fill="gifts.small"></em></p>
+          </article>
+        </div>
       </div>
     </section>
 

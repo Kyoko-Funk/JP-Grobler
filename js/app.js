@@ -342,12 +342,14 @@
     $("#teaserPics").append(fig);
   });
 
+  let pendingJump = null; // where a first-time visitor was heading (e.g. "#rsvp" from the scrapbook page)
   let mainStarted = false;
   function startMain() {
     store.set(PASSED_KEY, "1");
     if (mainStarted) return;
     mainStarted = true;
     $("#mapFrame").src = "https://www.google.com/maps?q=" + encodeURIComponent(S.venue.mapsQuery) + "&output=embed";
+    if (pendingJump) { const target = pendingJump; pendingJump = null; setTimeout(() => document.querySelector(target).scrollIntoView({ behavior: "smooth" }), 900); }
     venueGallery();
     scrapbookTeaser();
     startReveals();
@@ -459,12 +461,16 @@
     form.hidden = false;
   });
   /* Arriving from the scrapbook page (index.html#details or #rsvp)? Skip straight there. */
+  // Only for guests who've already been through the gate and quiz — everyone else
+  // does the fun bit first, then lands where they were heading.
   const deepLink = ["#details", "#rsvp"].includes(location.hash) ? location.hash : null;
-  if (deepLink) {
+  if (deepLink && store.get(PASSED_KEY)) {
     current.classList.remove("screen--active");
     current = $("#main");
     current.classList.add("screen--active");
     startMain();
     setTimeout(() => document.querySelector(deepLink).scrollIntoView(), 80);
+  } else if (deepLink) {
+    pendingJump = deepLink;
   }
 })();
