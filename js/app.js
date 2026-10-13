@@ -6,7 +6,6 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
   const fmt = str => String(str).replace(/\{(\d)\}/g, (_, i) => S.names[i] || "");
-  const get = path => path.split(".").reduce((o, k) => (o == null ? o : o[k]), S);
   const store = {
     get(k) { try { return localStorage.getItem(k); } catch (_) { return null; } },
     set(k, v) { try { localStorage.setItem(k, v); } catch (_) {} }
@@ -14,9 +13,7 @@
   const PASSED_KEY = "wedding-passed";
 
   /* ---------- fill words from config.js ---------- */
-  $$("[data-name]").forEach(el => (el.textContent = S.names[+el.dataset.name]));
-  $$("[data-surname]").forEach(el => (el.textContent = (S.surnames || [])[+el.dataset.surname] || ""));
-  $$("[data-fill]").forEach(el => (el.textContent = fmt(get(el.dataset.fill) ?? "")));
+  // (names and words from config.js are filled in by common.js)
   document.title = `${S.names[0]} & ${S.names[1]} · ${S.venueNickname}`;
 
   // Use the real couple photo if it exists; otherwise keep the elegant placeholder.
@@ -317,24 +314,27 @@
     });
   })();
 
+  /* Scrapbook teaser: a little fan of the pinned "family archives" polaroids */
+  (S.scrapbook.pinned || []).slice(0, 2).forEach((p, i) => {
+    const fig = document.createElement("figure");
+    fig.className = "snap";
+    fig.style.setProperty("--tilt", (i ? 5 : -6) + "deg");
+    fig.innerHTML = "<img alt=''>";
+    $("img", fig).src = p.src;
+    if (p.focus) $("img", fig).style.objectPosition = p.focus;
+    $("#teaserPics").append(fig);
+  });
+
   let mainStarted = false;
   function startMain() {
     store.set(PASSED_KEY, "1");
     if (mainStarted) return;
     mainStarted = true;
     $("#mapFrame").src = "https://www.google.com/maps?q=" + encodeURIComponent(S.venue.mapsQuery) + "&output=embed";
-    observeReveals();
+    startReveals();
     tick();
     setInterval(tick, 1000);
     document.dispatchEvent(new CustomEvent("main:shown"));
-  }
-
-  function observeReveals() {
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); } });
-    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
-    $$(".reveal").forEach(el => io.observe(el));
-    window.observeReveal = el => io.observe(el);
   }
 
   function tick() {
@@ -438,4 +438,13 @@
     $("#rsvpThanks").hidden = true;
     form.hidden = false;
   });
+  /* Arriving from the scrapbook page (index.html#details or #rsvp)? Skip straight there. */
+  const deepLink = ["#details", "#rsvp"].includes(location.hash) ? location.hash : null;
+  if (deepLink) {
+    current.classList.remove("screen--active");
+    current = $("#main");
+    current.classList.add("screen--active");
+    startMain();
+    setTimeout(() => document.querySelector(deepLink).scrollIntoView(), 80);
+  }
 })();

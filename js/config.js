@@ -186,6 +186,39 @@ window.SITE = {
     declinePhotoCaption: "Lily's official response."
   },
 
+  /* --- "Spotted in the wild" — the field guide on the scrapbook page ---
+     Written like a bird-watching book. Edit freely: these are guesses,
+     you know their real habits better!                                 */
+  fieldGuide: {
+    title: "Spotted in the wild",
+    intro: "A field guide to {0} & {1}, for the amateur observer.",
+    entries: [
+      {
+        name: "{0}",
+        latin: "Boerus bakkiensis",
+        facts: [
+          ["Habitat", "Behind the wheel of a bakkie, or within two metres of a braai."],
+          ["Plumage", "Vellies. Always vellies. Yes, even with the suit."],
+          ["Call", "“Ek is nou-nou daar.” He is not nou-nou there."],
+          ["Usually seen with", "Two pugs who believe they own him. They are correct."],
+          ["Behaviour", "Plans nothing. Has strong opinions about the meat."]
+        ]
+      },
+      {
+        name: "{1}",
+        latin: "Elegantia laatkomeris",
+        facts: [
+          ["Habitat", "The rose garden, a Pinterest board, or the passenger seat — correcting his driving."],
+          ["Plumage", "Immaculate. Arrives late, but arrives looking like that."],
+          ["Call", "“Five more minutes.” It is never five minutes."],
+          ["Feeding habits", "“I'm not hungry.” Proceeds to eat half of his plate."],
+          ["Behaviour", "Runs a tight ship. The groom is the ship."]
+        ]
+      }
+    ],
+    outro: "Spotted them in the wild? Submit the evidence below. Blurry photos accepted."
+  },
+
   /* --- Scrapbook ----------------------------------------------------- */
   scrapbook: {
     maxVideoSeconds: 15,

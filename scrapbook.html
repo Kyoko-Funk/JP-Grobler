@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>The Scrapbook · Jean-Pierre &amp; Juan-Marie</title>
+  <meta name="description" content="Pin a cheeky photo or leave a 15-second video message for Jean-Pierre &amp; Juan-Marie.">
+  <meta property="og:title" content="The Scrapbook · Jean-Pierre &amp; Juan-Marie">
+  <meta property="og:description" content="Spotted them in the wild? Submit the evidence.">
+  <meta name="theme-color" content="#f6f1e7">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📷</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Pinyon+Script&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <div class="screen screen--scroll screen--active">
+    <nav class="topnav" aria-label="Sections">
+      <a href="index.html#details">The Day</a>
+      <a href="index.html#rsvp">RSVP</a>
+      <a href="#pin">Scrapbook</a>
+    </nav>
+
+    <header class="hero">
+      <p class="eyebrow fade" style="--d:.1s">The scrapbook</p>
+      <h1 class="names names--small fade" style="--d:.3s"><span data-name="0"></span> <span class="amp">&amp;</span> <span data-name="1"></span></h1>
+      <p class="script fade" style="--d:.6s">Leave your mark</p>
+      <p class="lede fade" style="--d:.9s">Pin a cheeky photo to the wall, or record a 15-second video message. Videos stay sealed until the honeymoon, so be as sentimental — or as scandalous — as you like.</p>
+    </header>
+
+    <!-- SPOTTED IN THE WILD -->
+    <section class="block" id="spotted">
+      <div class="block__head reveal">
+        <p class="eyebrow">A field guide</p>
+        <h2 class="h2" data-fill="fieldGuide.title"></h2>
+        <p class="lede" data-fill="fieldGuide.intro"></p>
+      </div>
+      <div class="field-guide" id="fieldGuide"></div>
+      <p class="field-guide__outro reveal" data-fill="fieldGuide.outro"></p>
+    </section>
+
+    <!-- UPLOAD + WALL -->
+    <section class="block block--wall" id="pin">
+      <form id="uploadForm" class="form card upload reveal" novalidate>
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" class="tab tab--on" data-kind="photo" aria-selected="true">📷 Photo</button>
+          <button type="button" role="tab" class="tab" data-kind="video" aria-selected="false">🎥 Video message</button>
+        </div>
+
+        <label class="drop" id="drop">
+          <input type="file" id="fileInput" accept="image/*">
+          <span class="drop__text" id="dropText">Tap to choose a photo<br><small>or drag one in here</small></span>
+          <span class="drop__preview" id="dropPreview"></span>
+        </label>
+
+        <label class="field">
+          <span>Your name</span>
+          <input name="guestName" required maxlength="80" placeholder="So they know who to thank (or blame)">
+        </label>
+        <label class="field">
+          <span>Caption</span>
+          <input name="caption" maxlength="200" placeholder="e.g. Exhibit A: the groom's dance moves, 2019">
+        </label>
+
+        <div class="progress" id="uploadProgress" hidden><span></span></div>
+        <p class="form__error" id="uploadError" role="alert"></p>
+        <p class="form__ok" id="uploadOk" aria-live="polite"></p>
+        <button class="btn btn--primary" type="submit" id="uploadSubmit">Pin it to the scrapbook</button>
+      </form>
+
+      <p class="sealed" id="sealedCount"></p>
+      <div class="wall" id="wall" aria-live="polite"></div>
+      <p class="muted small center" id="wallEmpty">The wall is empty. Somebody has to go first — might as well be you.</p>
+      <p class="muted small center live-note">New photos appear here by themselves — no need to refresh.</p>
+    </section>
+
+    <footer class="footer">
+      <p class="script" data-fill="venueNickname"></p>
+      <p class="small"><a class="link" href="index.html#details">← Back to the invitation</a></p>
+      <p class="small muted">Made with love, a little mischief, and zero help from the couple.</p>
+    </footer>
+  </div>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" aria-label="Close">×</button>
+    <figure><img alt=""><figcaption></figcaption></figure>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/backend.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/scrapbook.js"></script>
+</body>
+</html>

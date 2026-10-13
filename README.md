@@ -9,7 +9,7 @@ A surprise invitation site: elegant on the outside, cheeky underneath.
 | 3 · Quiz | Six questions, one per card, confetti for right answers, teasing for wrong ones |
 | 4 · Details | Date, time, venue, map, directions, dress code, live countdown |
 | 5 · RSVP | Name, yes/no, plus-ones, dietary needs, note → **spreadsheet + email to you** |
-| 6 · Scrapbook | Guests upload photos (tilted, taped, on the wall) and 15-second video messages (sealed) → **email to you** |
+| 6 · Scrapbook | A teaser on the invitation, linking to its own page, **`scrapbook.html`**: a "Spotted in the wild" field guide to the couple, then guests upload photos (tilted, taped, on a wall that updates itself every minute) and 15-second video messages (sealed) → **email to you** |
 | `montage.html` | Password-locked farewell reel of all the video messages, for the honeymoon |
 
 Returning guests get a "Skip to the details" link, so they don't have to pass the gate every time.
@@ -20,11 +20,13 @@ Returning guests get a "Skip to the details" link, so they don't have to pass th
 
 ```
 index.html              ← the invitation (screens 1–6)
+scrapbook.html          ← the scrapbook page (field guide, uploads, photo wall)
 montage.html            ← the secret honeymoon reel
 css/style.css           ← colours, fonts, animations
 js/config.js            ← ✏️  ALL the words, names, quiz and settings — edit this one
 js/app.js               ← screens, gate, quiz, RSVP behaviour
-js/scrapbook.js         ← uploads and the photo wall
+js/scrapbook.js         ← field guide, uploads and the live photo wall
+js/common.js            ← bits both pages share (names, photo viewer, fade-ins)
 js/montage.js           ← the reel player/recorder
 js/confetti.js          ← confetti
 js/backend.js           ← talks to Google and Supabase
@@ -107,6 +109,8 @@ The site is just files, so any free static host works. Two easy options:
 **Option A — Netlify Drop (easiest):** go to [app.netlify.com/drop](https://app.netlify.com/drop) and drag this whole folder onto the page. You'll get a link immediately. Make a free account to keep it and to choose a nicer name (e.g. `outofnature-wedding.netlify.app`). To update the site later, drag the folder in again.
 
 **Option B — GitHub Pages (this repository):** on GitHub, open the repo → **Settings → Pages** → *Source: Deploy from a branch* → choose the branch and `/ (root)` → **Save**. After a minute your site is at `https://<your-username>.github.io/<repo-name>/`. Note: on a free GitHub plan the repository must be **public** for Pages to work. That means anyone could read the files, including the quiz answers, though not the reel password, which lives in Supabase.
+
+The scrapbook is at the same address + `/scrapbook.html` — guests can go straight there on the day without redoing the gate and quiz. **Tip:** turn that link into a QR code (any free QR generator) and put a little card on each table: *"Spotted them in the wild? Submit the evidence."*
 
 The montage is at the same address + `/montage.html`. It's not linked from the invitation, so keep that link for the honeymoon.
 

@@ -164,9 +164,9 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .option.is-right { background: #e6ecdf; border-color: var(--sage); }
 .option.is-wrong { background: #f4e4da; border-color: #dcb59e; text-decoration: line-through; color: var(--ink-soft); }
 .option:disabled { cursor: default; }
-.qcard__photo img { object-position: 50% 50%; }
+.snap.qcard__photo img { object-position: 50% 50%; }
 .snap.thanks__photo { width: min(170px, 50%); margin: 1.2rem auto 1.4rem; padding: .55rem .55rem .7rem; cursor: default; --tilt: 3deg; }
-.thanks__photo img { object-position: 50% 45%; }
+.snap.thanks__photo img { object-position: 50% 45%; }
 .thanks__photo figcaption { font-size: .95rem; margin-top: .45rem; }
 .thanks__photo:hover { transform: rotate(var(--tilt)); }
 .snap.qcard__photo { width: min(160px, 46%); margin: 1.6rem auto 0; padding: .55rem .55rem .7rem; cursor: default; }
@@ -332,7 +332,7 @@ textarea { resize: vertical; }
 }
 .snap:nth-child(3n+2)::before { background-color: rgba(230, 205, 180, .75); }
 .snap:nth-child(3n)::before { background-color: rgba(214, 196, 150, .7); }
-.snap img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--linen); }
+.snap img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: 50% 28%; background: var(--linen); }  /* crop from near the top: faces live there */
 .snap figcaption { font-family: var(--display); font-style: italic; font-size: 1.1rem; line-height: 1.3; margin-top: .7rem; text-align: center; }
 .snap figcaption small { display: block; font-family: var(--body); font-style: normal; font-size: .78rem; color: var(--ink-soft); margin-top: .25rem; letter-spacing: .05em; }
 .snap--sealed { cursor: default; background: #f3ead9; }
@@ -345,6 +345,32 @@ textarea { resize: vertical; }
   font-family: var(--display); font-size: 1.1rem; padding: 1rem;
 }
 .envelope b { display: block; font-size: 2.2rem; color: var(--clay); }
+
+/* ---------- invitation: scrapbook teaser ---------- */
+.teaser { text-align: center; }
+.teaser__pics { display: flex; justify-content: center; margin-bottom: 2.4rem; padding-top: 1rem; }
+.teaser__pics .snap { width: min(150px, 38vw); padding: .5rem .5rem .9rem; cursor: default; animation: none; }
+.teaser__pics .snap + .snap { margin-left: -1.6rem; margin-top: 1.2rem; }
+.teaser__pics .snap:hover { transform: rotate(var(--tilt)); }
+.teaser__btn { display: inline-block; margin-top: 2rem; text-decoration: none; }
+
+/* ---------- scrapbook page: field guide ---------- */
+.field-guide { display: grid; gap: 1.6rem; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); max-width: 60rem; margin: 0 auto; }
+.field-guide .card:nth-child(2) { transition-delay: .15s; }
+.specimen { position: relative; border-top: 3px double var(--sage-soft); }
+.specimen__no { font-family: var(--display); text-transform: uppercase; letter-spacing: .28em; font-size: .72rem; color: var(--gold); margin: 0; }
+.specimen__name { font-family: var(--display); font-weight: 400; font-size: 2.1rem; margin: .4rem 0 0; line-height: 1.1; }
+.specimen__latin { font-family: var(--display); font-style: italic; color: var(--sage-deep); font-size: 1.15rem; margin: .2rem 0 1.4rem; }
+.specimen__facts { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: .65rem 1.1rem; }
+.specimen__facts dt { font-family: var(--display); text-transform: uppercase; letter-spacing: .16em; font-size: .7rem; color: var(--ink-soft); padding-top: .3rem; }
+.specimen__facts dd { margin: 0; }
+@media (max-width: 420px) {
+  .specimen__facts { grid-template-columns: 1fr; gap: .1rem; }
+  .specimen__facts dd { margin-bottom: .6rem; }
+}
+.field-guide__outro { text-align: center; font-family: var(--display); font-style: italic; font-size: 1.3rem; color: var(--sage-deep); margin: 3rem auto 0; max-width: 32rem; }
+.block--wall { padding-top: 0; }
+.live-note { margin-top: 2.5rem; }
 
 /* ---------- lightbox ---------- */
 .lightbox {

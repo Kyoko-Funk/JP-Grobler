@@ -1,5 +1,5 @@
 /* =====================================================================
-   SIX · the scrapbook — uploads, the photo wall, sealed video messages.
+   The scrapbook page — field guide, uploads, the photo wall, sealed videos.
    Photos are public on the wall. Videos are stored privately and only
    appear in the password-locked montage (montage.html).
    ===================================================================== */
@@ -21,6 +21,7 @@
   let chosen = null;       // the File the guest picked
   let previewUrl = null;
   let sealedCount = 0;
+  const shown = new Set();  // photo paths already on the wall, so live updates don't double up
 
   const uuid = () => (crypto.randomUUID ? crypto.randomUUID()
     : "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, c => {
@@ -147,8 +148,8 @@
       if (!Backend.hasStorage()) {
         // Demo mode: show it on screen only.
         kind === "photo"
-          ? addPhoto({ src: previewUrl, guest_name: guestName, caption, tilt }, true)
-          : addSealed(guestName, true);
+          ? addPhoto({ src: previewUrl, guest_name: guestName, caption, tilt }, "mine")
+          : addSealed(guestName, "mine");
         previewUrl = null; // the card now owns the preview
         okEl.textContent = "Demo mode: this is only on your screen — storage isn't connected yet.";
       } else {
@@ -159,9 +160,10 @@
         await Backend.addUploadRecord({ kind, path, guest_name: guestName, caption: caption || null, tilt });
         // Ping the organiser. If email fails, the upload is still safe, so don't bother the guest.
         Backend.notify({ type: "upload", kind, guestName, caption, url: Backend.publicUrl(path) }).catch(() => {});
+        shown.add(path);
         kind === "photo"
-          ? addPhoto({ src: Backend.publicUrl(path), guest_name: guestName, caption, tilt }, true)
-          : addSealed(guestName, true);
+          ? addPhoto({ src: Backend.publicUrl(path), guest_name: guestName, caption, tilt }, "mine")
+          : addSealed(guestName, "mine");
         okEl.textContent = kind === "photo"
           ? "Pinned! Scroll down to admire your handiwork."
           : "Sealed and saved. Not even the couple can watch it until the honeymoon. 🤫";
@@ -178,22 +180,27 @@
     }
   });
 
-  /* ---------- the wall ---------- */
-  function placeCard(card, fresh) {
+  /* ---------- the wall ----------
+     Order: the pinned "family archives" first, then guest photos, newest first.
+     mode: "mine"  → the guest's own upload (goes to the top of the guest photos and scrolls into view)
+           "live"  → someone else's new upload, found by the once-a-minute check
+           "load"  → the initial load (appended in order)                                  */
+  function placeCard(card, mode, pinned) {
     $("#wallEmpty").hidden = true;
-    if (fresh) {
-      wall.prepend(card);
-      setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "center" }), 200);
-    } else wall.append(card);
+    if (pinned) card.dataset.pinned = "1";
+    if (mode === "load") return wall.append(card);
+    const lastPinned = [...wall.querySelectorAll("[data-pinned]")].pop();
+    lastPinned ? lastPinned.after(card) : wall.prepend(card);
+    if (mode === "mine") setTimeout(() => card.scrollIntoView({ behavior: "smooth", block: "center" }), 200);
   }
 
-  function addPhoto(row, fresh, index = 0) {
+  function addPhoto(row, mode = "load", index = 0, pinned = false) {
     const fig = document.createElement("figure");
     fig.className = "snap";
     const tilt = row.tilt || randomTilt();
     fig.style.setProperty("--tilt", tilt + "deg");
     fig.style.setProperty("--tape", (-tilt * 1.5).toFixed(1) + "deg");
-    fig.style.setProperty("--delay", fresh ? "0s" : Math.min(index * 0.08, 1.2) + "s");
+    fig.style.setProperty("--delay", mode === "load" ? Math.min(index * 0.08, 1.2) + "s" : "0s");
     fig.innerHTML = '<img loading="lazy" alt=""><figcaption><span></span><small></small></figcaption>';
     const img = $("img", fig);
     img.src = row.src;
@@ -201,18 +208,18 @@
     img.alt = row.caption || "A photo from " + row.guest_name;
     $("figcaption span", fig).textContent = row.caption || "";
     $("figcaption small", fig).textContent = "— " + row.guest_name;
-    fig.addEventListener("click", () => openLightbox(row.src, row.caption, row.guest_name));
-    placeCard(fig, fresh);
+    fig.addEventListener("click", () => window.openLightbox(row.src, row.caption, row.guest_name));
+    placeCard(fig, mode, pinned);
   }
 
-  function addSealed(guestName, fresh) {
+  function addSealed(guestName, mode) {
     const fig = document.createElement("figure");
     fig.className = "snap snap--sealed";
     fig.style.setProperty("--tilt", randomTilt() + "deg");
     fig.innerHTML = '<div class="envelope"><span><b>✉</b>A video message,<br>sealed until the honeymoon</span></div><figcaption><span></span><small></small></figcaption>';
     $("figcaption span", fig).textContent = "Top secret";
     $("figcaption small", fig).textContent = "— " + guestName;
-    placeCard(fig, fresh);
+    placeCard(fig, mode);
     sealedCount++;
     updateSealed();
   }
@@ -223,40 +230,72 @@
       : "";
   }
 
+  async function refreshSealed() {
+    try { sealedCount = Math.max(sealedCount, await Backend.rpc("sealed_video_count")); updateSealed(); } catch (_) {}
+  }
+
   async function loadWall() {
     // The "family archives" go up first, so the wall never starts empty.
-    const fmt = str => String(str).replace(/\{(\d)\}/g, (_, i) => S.names[i] || "");
     (S.scrapbook.pinned || []).forEach((p, i) =>
-      addPhoto({ src: p.src, focus: p.focus, tilt: p.tilt, caption: fmt(p.caption), guest_name: p.from }, false, i));
+      addPhoto({ src: p.src, focus: p.focus, tilt: p.tilt, caption: fmt(p.caption), guest_name: p.from }, "load", i, true));
     if (!Backend.hasStorage()) return;
     try {
       const rows = await Backend.listPhotos();
-      rows.forEach((r, i) => addPhoto({ ...r, src: Backend.publicUrl(r.path) }, false, i));
+      rows.forEach((r, i) => { shown.add(r.path); addPhoto({ ...r, src: Backend.publicUrl(r.path) }, "load", i); });
     } catch (ex) {
       console.warn("Scrapbook wall didn't load:", ex);
     }
-    try {
-      sealedCount = await Backend.rpc("sealed_video_count");
-      updateSealed();
-    } catch (_) {}
+    refreshSealed();
+    // Live wall: once a minute (while the page is open and on screen), pin anything new.
+    setInterval(checkForNew, 60 * 1000);
+    document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && checkForNew());
   }
-  document.addEventListener("main:shown", loadWall, { once: true });
 
-  /* ---------- lightbox ---------- */
-  const lb = $("#lightbox");
-  function openLightbox(src, caption, name) {
-    $("img", lb).src = src;
-    $("figcaption", lb).textContent = (caption ? caption + " " : "") + "— " + name;
-    lb.hidden = false;
-    $(".lightbox__close", lb).focus();
+  let checking = false;
+  async function checkForNew() {
+    if (checking || document.visibilityState !== "visible") return;
+    checking = true;
+    try {
+      const rows = await Backend.listPhotos();
+      rows.filter(r => !shown.has(r.path)).reverse().forEach(r => {   // oldest first, so the newest ends up on top
+        shown.add(r.path);
+        addPhoto({ ...r, src: Backend.publicUrl(r.path) }, "live");
+      });
+      await refreshSealed();
+    } catch (_) {
+      // signal dropped — try again next minute
+    } finally {
+      checking = false;
+    }
   }
-  window.openLightbox = (src, caption, name) => {
-    $("img", lb).src = src;
-    $("figcaption", lb).textContent = [caption, name && (caption ? "— " + name : name)].filter(Boolean).join(" ");
-    lb.hidden = false;
-    $(".lightbox__close", lb).focus();
-  };
-  const closeLb = () => { lb.hidden = true; $("img", lb).src = ""; };
-  lb.addEventListener("click", e => { if (e.target === lb || e.target.classList.contains("lightbox__close")) closeLb(); });
-  addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+
+  /* ---------- "Spotted in the wild": the field guide ---------- */
+  function renderFieldGuide() {
+    const guide = S.fieldGuide;
+    const wrap = $("#fieldGuide");
+    if (!guide || !wrap) return;
+    guide.entries.forEach((entry, i) => {
+      const card = document.createElement("article");
+      card.className = "card specimen reveal";
+      card.innerHTML = `
+        <p class="specimen__no"></p>
+        <h3 class="specimen__name"></h3>
+        <p class="specimen__latin"></p>
+        <dl class="specimen__facts"></dl>`;
+      $(".specimen__no", card).textContent = `Specimen No. ${String(i + 1).padStart(3, "0")}`;
+      $(".specimen__name", card).textContent = fmt(entry.name);
+      $(".specimen__latin", card).textContent = entry.latin;
+      entry.facts.forEach(([label, text]) => {
+        const dt = document.createElement("dt"); dt.textContent = label;
+        const dd = document.createElement("dd"); dd.textContent = fmt(text);
+        $(".specimen__facts", card).append(dt, dd);
+      });
+      wrap.append(card);
+    });
+  }
+
+  if (!Backend.hasStorage()) $(".live-note").hidden = true; // nothing to refresh in demo mode
+  renderFieldGuide();
+  loadWall();
+  startReveals();
 })();

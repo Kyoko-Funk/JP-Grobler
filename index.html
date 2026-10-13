@@ -65,7 +65,7 @@
     <nav class="topnav" aria-label="Sections">
       <a href="#details">The Day</a>
       <a href="#rsvp">RSVP</a>
-      <a href="#scrapbook">Scrapbook</a>
+      <a href="scrapbook.html">Scrapbook</a>
     </nav>
 
     <header class="hero reveal">
@@ -202,44 +202,15 @@
       </div>
     </section>
 
-    <!-- SIX · SCRAPBOOK -->
-    <section id="scrapbook" class="block">
+    <!-- SIX · SCRAPBOOK (teaser — the full scrapbook lives on scrapbook.html) -->
+    <section id="scrapbook" class="block teaser">
+      <div class="teaser__pics reveal" id="teaserPics" aria-hidden="true"></div>
       <div class="block__head reveal">
         <p class="eyebrow">The scrapbook</p>
         <h2 class="h2">Leave your mark</h2>
-        <p class="lede">Post a cheeky photo for the wall, or record a short video message (15 seconds, max). Videos stay sealed until the honeymoon, so be as sentimental — or as scandalous — as you like.</p>
+        <p class="lede">Pin a cheeky photo to the wall or record a 15-second video message, sealed until the honeymoon. There's also a field guide for spotting the couple in the wild.</p>
+        <a class="btn btn--primary teaser__btn" href="scrapbook.html">Open the scrapbook</a>
       </div>
-
-      <form id="uploadForm" class="form card upload reveal" novalidate>
-        <div class="tabs" role="tablist">
-          <button type="button" role="tab" class="tab tab--on" data-kind="photo" aria-selected="true">📷 Photo</button>
-          <button type="button" role="tab" class="tab" data-kind="video" aria-selected="false">🎥 Video message</button>
-        </div>
-
-        <label class="drop" id="drop">
-          <input type="file" id="fileInput" accept="image/*">
-          <span class="drop__text" id="dropText">Tap to choose a photo<br><small>or drag one in here</small></span>
-          <span class="drop__preview" id="dropPreview"></span>
-        </label>
-
-        <label class="field">
-          <span>Your name</span>
-          <input name="guestName" required maxlength="80" placeholder="So they know who to thank (or blame)">
-        </label>
-        <label class="field">
-          <span>Caption</span>
-          <input name="caption" maxlength="200" placeholder="e.g. Exhibit A: the groom's dance moves, 2019">
-        </label>
-
-        <div class="progress" id="uploadProgress" hidden><span></span></div>
-        <p class="form__error" id="uploadError" role="alert"></p>
-        <p class="form__ok" id="uploadOk" aria-live="polite"></p>
-        <button class="btn btn--primary" type="submit" id="uploadSubmit">Pin it to the scrapbook</button>
-      </form>
-
-      <p class="sealed reveal" id="sealedCount"></p>
-      <div class="wall" id="wall" aria-live="polite"></div>
-      <p class="muted small center" id="wallEmpty">The wall is empty. Somebody has to go first — might as well be you.</p>
     </section>
 
     <footer class="footer">
@@ -256,7 +227,7 @@
   <script src="js/config.js"></script>
   <script src="js/confetti.js"></script>
   <script src="js/backend.js"></script>
+  <script src="js/common.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/scrapbook.js"></script>
 </body>
 </html>
