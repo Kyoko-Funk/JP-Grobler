@@ -127,6 +127,24 @@
   const bar = $("#quizBar");
   let qi = 0, quizStarted = false;
 
+  // Fetch the quiz and RSVP polaroids in the background while guests are still on the
+  // opening screens, so they appear instantly when the moment comes.
+  // We keep the downloaded <img> itself and reuse it later, because many hosts make
+  // browsers re-check a file with the server before showing it again.
+  const preloaded = {};
+  [...S.quiz.map(q => q.photo), S.rsvp.declinePhoto].filter(Boolean).forEach(src => {
+    const img = new Image();
+    img.src = src;
+    preloaded[src] = img;
+  });
+  // Calls ready(img) as soon as the photo can be shown — instantly if it's already downloaded.
+  function whenLoaded(src, ready, failed) {
+    const img = preloaded[src] || Object.assign(new Image(), { src });
+    if (img.complete && img.naturalWidth) return ready(img);
+    img.addEventListener("load", () => ready(img), { once: true });
+    if (failed) img.addEventListener("error", failed, { once: true });
+  }
+
   function startQuiz() {
     if (quizStarted) return;
     quizStarted = true;
@@ -198,8 +216,7 @@
 
   // Drops a taped polaroid onto the card (e.g. the pugs). Skips quietly if the photo is missing.
   function showPolaroid(card, item) {
-    const img = new Image();
-    img.onload = () => {
+    whenLoaded(item.photo, img => {
       const fig = document.createElement("figure");
       fig.className = "snap qcard__photo";
       fig.style.setProperty("--tilt", "-3deg");
@@ -210,8 +227,7 @@
       $(".qcard__reply", card).before(fig);
       // keep the punchline and the next button in view on small screens
       setTimeout(() => $(".btn", card)?.scrollIntoView({ behavior: "smooth", block: "nearest" }), 350);
-    };
-    img.src = item.photo;
+    });
   }
 
   function renderEnd() {
@@ -293,8 +309,9 @@
     });
   })();
 
-  /* Venue photos: placed in order, each shown once it loads; missing ones stay hidden. */
-  (function venueGallery() {
+  /* Venue photos: placed in order, each shown once it loads; missing ones stay hidden.
+     Only loaded once the details screen opens, so they don't slow down the quiz photos. */
+  function venueGallery() {
     const wrap = $("#venueGallery");
     (S.venue.photos || []).forEach(p => {
       const fig = document.createElement("figure");
@@ -312,10 +329,10 @@
       fig.addEventListener("click", () => window.openLightbox && window.openLightbox(p.src, "", S.venue.name));
       wrap.append(fig);
     });
-  })();
+  }
 
-  /* Scrapbook teaser: a little fan of the pinned "family archives" polaroids */
-  (S.scrapbook.pinned || []).slice(0, 2).forEach((p, i) => {
+  /* Scrapbook teaser: a little fan of the pinned "family archives" polaroids (also loaded with the details) */
+  const scrapbookTeaser = () => (S.scrapbook.pinned || []).slice(0, 2).forEach((p, i) => {
     const fig = document.createElement("figure");
     fig.className = "snap";
     fig.style.setProperty("--tilt", (i ? 5 : -6) + "deg");
@@ -331,6 +348,8 @@
     if (mainStarted) return;
     mainStarted = true;
     $("#mapFrame").src = "https://www.google.com/maps?q=" + encodeURIComponent(S.venue.mapsQuery) + "&output=embed";
+    venueGallery();
+    scrapbookTeaser();
     startReveals();
     tick();
     setInterval(tick, 1000);
@@ -410,10 +429,11 @@
       const dp = $("#declinePhoto");
       dp.hidden = going || !S.rsvp.declinePhoto;
       if (!dp.hidden) {
-        $("img", dp).src = S.rsvp.declinePhoto;
-        $("img", dp).alt = "A pug turning its back";
         $("figcaption", dp).textContent = S.rsvp.declinePhotoCaption || "";
-        $("img", dp).onerror = () => (dp.hidden = true);
+        whenLoaded(S.rsvp.declinePhoto, img => {
+          img.alt = "A pug turning its back";
+          $("img", dp).replaceWith(img);
+        }, () => (dp.hidden = true));
       }
       $("#rsvpThanks .demo-note")?.remove();
       if (res.demo) {
