@@ -9,7 +9,7 @@
 window.SITE = {
 
   /* --- The couple ---------------------------------------------------- */
-  names: ["Jean-Pierre", "Juan-Marie"], // first names (used all over the site)
+  names: ["Jean-Pierre", "Jaun-Marie"], // first names (used all over the site)
   surnames: ["Grobler", "Van Zyl"],     // shown under the names on the opening screen
   photo: "images/couple.jpg",          // ← drop their photo in /images with this name
   venueNickname: "Out of Nature",
